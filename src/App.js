@@ -1,26 +1,13 @@
 import React from 'react'
 import { Canvas } from 'react-three-fiber'
 import Arrow from './Arrow';
-// import './Arrow';
 
 
-class App extends React.Component{
+export default () => (
 
-  
-  render() {
-    return(
-    <Canvas>
-      <Arrow/>
+      <Canvas>
       <pointLight position={[10, 10, 10]} />
-      {/* <mesh>
-        <sphereBufferGeometry attach="geometry" />
-        <meshStandardMaterial attach="material" color="blue" />
-      </mesh> */}
+      <Arrow/>
     </Canvas>
+
     )
-  }
-  
-}
-
-
-export default App;
