@@ -10,6 +10,7 @@ import { MapControls } from 'drei';
 
 
 function Axis(){
+
   var hpoints = [];
   hpoints.push(new THREE.Vector3(-10, 0, 0));
   hpoints.push(new THREE.Vector3(10, 0, 0));
@@ -17,18 +18,68 @@ function Axis(){
   vpoints.push(new THREE.Vector3(0, -10, 0));
   vpoints.push(new THREE.Vector3(0, 10, 0));
   return (<>
-    <line>
+  <mesh >
+          <cylinderBufferGeometry attach="geometry" args={[1,1,2000,32]}/>
+          <meshStandardMaterial attach="material" color="black"/>
+        </mesh>
+    {/* <line>
     <geometry attach="geometry" vertices={hpoints} />
-    <lineBasicMaterial attach="material" color="black" />
+    <lineBasicMaterial attach="material" color="black" linewidth={100}/>
   </line>
   <line>
     <geometry attach="geometry" vertices={vpoints} />
-    <lineBasicMaterial attach="material" color="black" />
-  </line>
+    <lineBasicMaterial attach="material" color="black" linewidth={10} />
+  </line> */}
   </>
   )
 }
 
+function NewAxis() {
+
+  const offsetToLines = function(offset) {
+    let vpoints = [];
+    vpoints.push(new THREE.Vector3(offset, -10, 0));
+    vpoints.push(new THREE.Vector3(offset, 10, 0));
+    console.log(offset)
+    return (
+      <line key={offset}>
+        <geometry attach="geometry" vertices={vpoints}/>
+        <lineBasicMaterial attach="material" color="black"/>
+      </line>
+    )
+  }
+
+  let hpoints = [];
+  hpoints.push(new THREE.Vector3(-10, 0, 0));
+  hpoints.push(new THREE.Vector3(10, 0, 0));
+
+  let zpoints = [];
+  zpoints.push(new THREE.Vector3(0,0,-10));
+  zpoints.push(new THREE.Vector3(0,0,10));
+
+  let offsets = [-2,-1,0,1,2];
+
+    return (
+      <>
+        <line>
+          <geometry attach="geometry" vertices={hpoints} />
+          <lineBasicMaterial attach="material" color="black" linewidth={100}/>
+        </line>
+        {offsets.map(offsetToLines)}
+        <line>
+          <geometry attach="geometry" vertices={zpoints}/>
+          <lineBasicMaterial attach="material" color="black"/>
+        </line>
+      </>
+    )
+}
+
+function CylinderAxis() {
+  return(
+    <>
+    </>
+  )
+}
 
 export default function App() {
   // let [ref, material] = useResource();
@@ -40,10 +91,10 @@ export default function App() {
 
   return (
 
-    <Canvas>
+    <Canvas orthographic camera={{ position: [0, 0, 50], zoom: 10, up: [0, 0, 1], far: 10000 }}>
       <ambientLight />
       <MapControls />
-      <Axis />
+      <Axis/>
       {/* <OrbitControls /> */}
       {/* <mesh> */}
       {/* <bufferGeometry setFromPoints = {points}/> */}
